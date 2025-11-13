@@ -1,7 +1,7 @@
 [versions]
-kotlin = "2.2.20"
+kotlin = "2.2.21"
 ktor = "3.3.2"
-logback = "1.5.20"
+logback = "1.5.21"
 axiom = "1.21.0"
 
 [libraries]
