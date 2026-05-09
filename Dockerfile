@@ -1,17 +1,7 @@
 FROM eclipse-temurin:25.0.3_9-jre-alpine-3.22
 
-# Install runtime packages and tini (small init)
-RUN apk add --no-cache \
-    avahi \
-    avahi-tools \
-    cups \
-    cups-filters \
-    brlaser \
-    epson-inkjet-printer-escpr \
-    dbus \
-    ipptool \
-    tini \
-    && mkdir -p /var/run/cups /var/spool/cups /var/log/cups /app
+# Install runtime packages, document conversion tooling, and tini (small init)
+RUN apk add --no-cache     avahi     avahi-tools     cups     cups-filters     brlaser     epson-inkjet-printer-escpr     dbus     ipptool     tini     libreoffice     && mkdir -p /var/run/cups /var/spool/cups /var/log/cups /app
 
 WORKDIR /app
 

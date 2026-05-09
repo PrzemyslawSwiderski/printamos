@@ -47,8 +47,9 @@
                         <div class="mb-2">
                             <label for="fileInput" class="form-label">File to print</label>
                             <input id="fileInput" name="file" type="file" required class="form-control form-control-lg p-5"
-                                accept=".pdf,.jpg,.jpeg,.gif,.png" style="min-height: 100px; cursor: pointer;" />
-                            <div class="form-text">Accepted: .pdf, .jpg, .jpeg, .gif, .png</div>
+                                accept=".pdf,.jpg,.jpeg,.gif,.png,.txt,.xml,.doc,.docx,.ppt,.pptx,.xlsx,.xmlx" style="min-height: 100px; cursor: pointer;" />
+                            <div class="form-text">Accepted: .pdf, .jpg, .jpeg, .gif, .png, .txt, .xml, .doc, .docx, .ppt, .pptx, .xlsx, .xmlx</div>
+                            <div class="form-text">Office files are converted to PDF server-side before printing. XML prints as plain text. The non-standard .xmlx extension is treated as .xlsx.</div>
                             <div class="invalid-feedback">Please supply a valid file.</div>
                         </div>
 
