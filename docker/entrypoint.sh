@@ -7,6 +7,12 @@ dbus-daemon --system > /var/log/cups/dbus 2>&1 &
 
 sleep 2
 
+# Overwrite Docker's generated file with our own
+cat <<EOF > /etc/resolv.conf
+nameserver 127.0.0.1
+options ndots:0
+EOF
+
 # Start unbound
 echo "Starting unbound..."
 unbound 2>&1 &

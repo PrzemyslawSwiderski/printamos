@@ -25,7 +25,6 @@ COPY docker/conf/cupsd.conf /etc/cups/cupsd.conf
 COPY docker/conf/cups-browsed.conf /etc/cups/cups-browsed.conf
 COPY docker/conf/avahi-daemon.conf /etc/avahi/avahi-daemon.conf
 COPY docker/conf/avahi-local.conf /etc/unbound/unbound.conf.d/avahi-local.conf
-COPY docker/conf/resolvconf.conf /etc/resolvconf.conf
 
 # Copy entrypoint script and make executable
 COPY docker/entrypoint.sh /app/entrypoint.sh
