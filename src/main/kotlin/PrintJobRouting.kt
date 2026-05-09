@@ -7,12 +7,12 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.File
-import java.nio.file.Files
 import kotlin.io.path.createTempDirectory
 
 private val DIRECT_PRINT_EXTENSIONS = setOf("pdf", "jpg", "jpeg", "gif", "png", "txt")
 private val TEXT_AS_TXT_EXTENSIONS = setOf("xml")
 private val OFFICE_TO_PDF_EXTENSIONS = setOf("doc", "docx", "ppt", "pptx", "xlsx", "xmlx")
+private val SUPPORTED_EXTENSIONS = DIRECT_PRINT_EXTENSIONS + TEXT_AS_TXT_EXTENSIONS + OFFICE_TO_PDF_EXTENSIONS
 
 fun Route.printJobRouting() {
 
@@ -60,7 +60,7 @@ fun Route.printJobRouting() {
         if (extension !in allowedExtensions) {
             call.respond(
                 HttpStatusCode.BadRequest,
-                "Unsupported file type .$extension. Allowed: .pdf, .jpg, .jpeg, .gif, .png, .txt, .xml, .doc, .docx, .ppt, .pptx, .xlsx, .xmlx"
+                "Unsupported file type '$extension'. Allowed: $SUPPORTED_EXTENSIONS"
             )
             return@post
         }

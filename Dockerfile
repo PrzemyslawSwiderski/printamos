@@ -1,7 +1,21 @@
 FROM eclipse-temurin:25.0.3_9-jre-alpine-3.22
 
 # Install runtime packages, document conversion tooling, and tini (small init)
-RUN apk add --no-cache     avahi     avahi-tools     cups     cups-filters     brlaser     epson-inkjet-printer-escpr     dbus     ipptool     tini     libreoffice     && mkdir -p /var/run/cups /var/spool/cups /var/log/cups /app
+RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk add --no-cache avahi \
+      avahi-tools \
+      avahi2dns@testing \
+      openresolv \
+      unbound \
+      cups \
+      cups-filters \
+      brlaser \
+      epson-inkjet-printer-escpr \
+      dbus \
+      ipptool \
+      tini \
+      libreoffice \
+      && mkdir -p /var/run/cups /var/spool/cups /var/log/cups /app
 
 WORKDIR /app
 
@@ -10,6 +24,8 @@ COPY build/libs/printamos-all.jar /app/server.jar
 COPY docker/conf/cupsd.conf /etc/cups/cupsd.conf
 COPY docker/conf/cups-browsed.conf /etc/cups/cups-browsed.conf
 COPY docker/conf/avahi-daemon.conf /etc/avahi/avahi-daemon.conf
+COPY docker/conf/avahi-local.conf /etc/unbound/unbound.conf.d/avahi-local.conf
+COPY docker/conf/resolvconf.conf /etc/resolvconf.conf
 
 # Copy entrypoint script and make executable
 COPY docker/entrypoint.sh /app/entrypoint.sh

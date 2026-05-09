@@ -110,9 +110,13 @@
     statusMessage.textContent = 'Sending print job...';
 
     try {
+      const controller = new AbortController();
+      setTimeout(() => controller.abort(), 10000); // 10s timeout
+
       const resp = await fetch('/api/v1/print-job', {
         method: 'POST',
-        body: formData
+        body: formData,
+        signal: controller.signal
       });
 
       const text = await resp.text().catch(() => '');

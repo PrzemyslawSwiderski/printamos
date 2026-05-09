@@ -7,6 +7,18 @@ dbus-daemon --system > /var/log/cups/dbus 2>&1 &
 
 sleep 2
 
+# Start unbound
+echo "Starting unbound..."
+unbound 2>&1 &
+
+sleep 2
+
+# Start avahi2dns
+echo "Starting avahi2dns..."
+avahi2dns -v -p 5354 > /var/log/avahi2dns 2>&1 &
+
+sleep 2
+
 # Start avahi-daemon
 echo "Starting avahi-daemon..."
 avahi-daemon --no-drop-root --no-rlimits --debug > /var/log/cups/avahi 2>&1 &
