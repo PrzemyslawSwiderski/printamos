@@ -111,7 +111,7 @@
 
     try {
       const controller = new AbortController();
-      setTimeout(() => controller.abort(), 10000); // 10s timeout
+      setTimeout(() => controller.abort(), 30000); // 30s timeout
 
       const resp = await fetch('/api/v1/print-job', {
         method: 'POST',

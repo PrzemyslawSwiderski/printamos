@@ -5,7 +5,11 @@ import io.ktor.http.content.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.utils.io.core.readBytes
 import io.ktor.utils.io.jvm.javaio.*
+import io.ktor.utils.io.readRemaining
+import kotlinx.io.readByteArray
+import org.slf4j.LoggerFactory
 import java.io.File
 import kotlin.io.path.createTempDirectory
 
@@ -14,9 +18,11 @@ private val TEXT_AS_TXT_EXTENSIONS = setOf("xml")
 private val OFFICE_TO_PDF_EXTENSIONS = setOf("doc", "docx", "ppt", "pptx", "xlsx", "xmlx")
 private val SUPPORTED_EXTENSIONS = DIRECT_PRINT_EXTENSIONS + TEXT_AS_TXT_EXTENSIONS + OFFICE_TO_PDF_EXTENSIONS
 
+private val log = LoggerFactory.getLogger("PrintJobRouting")
 fun Route.printJobRouting() {
 
     post("/print-job") {
+        log.info("Printing job received")
         val multipart = call.receiveMultipart()
         var printerName: String? = null
         var file: PartData.FileItem? = null
@@ -37,7 +43,7 @@ fun Route.printJobRouting() {
                 is PartData.FileItem -> {
                     if (part.name == "file") {
                         file = part
-                        fileContent = part.provider().toInputStream().readBytes()
+                        fileContent = part.provider().readRemaining().readByteArray()
                     }
                 }
 
@@ -68,14 +74,14 @@ fun Route.printJobRouting() {
         val workingDir = createTempDirectory("printamos_").toFile()
         val uploadedFile = workingDir.resolve(buildWorkingFileName(originalFileName, extension))
 
-        var fileToPrint = uploadedFile
+        var fileToPrint: File
         try {
             uploadedFile.writeBytes(fileContent)
 
-            fileToPrint = when {
-                extension in DIRECT_PRINT_EXTENSIONS -> uploadedFile
-                extension in TEXT_AS_TXT_EXTENSIONS -> normalizeTextLikeFile(uploadedFile, workingDir)
-                extension in OFFICE_TO_PDF_EXTENSIONS -> convertOfficeDocumentToPdf(uploadedFile, extension, workingDir)
+            fileToPrint = when (extension) {
+                in DIRECT_PRINT_EXTENSIONS -> uploadedFile
+                in TEXT_AS_TXT_EXTENSIONS -> normalizeTextLikeFile(uploadedFile, workingDir)
+                in OFFICE_TO_PDF_EXTENSIONS -> convertOfficeDocumentToPdf(uploadedFile, extension, workingDir)
                 else -> uploadedFile
             }
 
