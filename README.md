@@ -19,7 +19,8 @@ Frontend app lets the user printing the files with a simple select window or dra
 - Bootstrap based fully responsive styling.
 - Uses the [OpenPrinting CUPS](https://openprinting.github.io/cups/) tool as backend.
 - Drag & Drop files printing.
-- Minimal Docker Alpine image ~400MB.
+- Many file types accepted: `.pdf,.jpg,.jpeg,.gif,.png,.txt,.xml,.doc,.docx,.ppt,.pptx,.xlsx,.xmlx`
+- Optimized Docker Alpine image ~1.5GB.
 - Ktor Server API.
 
 ## Docker Compose
