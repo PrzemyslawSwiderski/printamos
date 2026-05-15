@@ -1,10 +1,8 @@
 FROM eclipse-temurin:25.0.3_9-jre-alpine-3.22
 
-# Install runtime packages, document conversion tooling, and tini (small init)
-RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    apk add --no-cache avahi \
+RUN apk add --no-cache \
+      avahi \
       avahi-tools \
-      avahi2dns@testing \
       openresolv \
       unbound \
       cups \
@@ -15,7 +13,11 @@ RUN echo "@testing https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/a
       ipptool \
       tini \
       libreoffice \
+      gcompat \
       && mkdir -p /var/run/cups /var/spool/cups /var/log/cups /app
+
+ADD https://github.com/LouisBrunner/avahi2dns/releases/download/0.2.0/avahi2dns-linux-amd64 /usr/local/bin/avahi2dns
+RUN chmod +x /usr/local/bin/avahi2dns
 
 WORKDIR /app
 

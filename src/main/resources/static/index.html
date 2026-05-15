@@ -2,83 +2,77 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Printamos</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Printamos</title>
 
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <style>
-        .option-badge {
-            margin-right: .5rem;
-        }
+  <style>
+    .spinner-grow-sm {
+      width: 1rem;
+      height: 1rem;
+    }
 
-        .spinner-grow-sm {
-            width: 1rem;
-            height: 1rem;
-        }
-
-        #statusBox {
-            word-wrap: break-word;
-            white-space: pre-wrap;
-        }
-    </style>
+    #statusBox {
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container py-4 justify-content-center">
+  <div class="container py-4 justify-content-center">
 
-        <!-- Upload & Print -->
-        <div class="col-12 col-md-10 col-lg-8">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h3>Upload & Print</h3>
+    <!-- Upload & Print -->
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3>Upload & Print</h3>
 
-                    <form id="printForm" class="needs-validation" novalidate>
-                        <div class="mb-2">
-                            <label for="printerSelect" class="form-label">Select Printer</label>
-                            <select id="printerSelect" name="printer_name" required class="form-select">
-                            </select>
-                            <div class="invalid-feedback">Please select a printer.</div>
-                        </div>
+          <form id="printForm" class="needs-validation" novalidate>
+            <div class="mb-2">
+              <label for="printerSelect" class="form-label">Select Printer</label>
+              <select id="printerSelect" name="printer_name" required class="form-select">
+              </select>
+              <div class="invalid-feedback">Please select a printer.</div>
+            </div>
 
-                        <div class="mb-2">
-                            <label for="fileInput" class="form-label">File to print</label>
-                            <input id="fileInput" name="file" type="file" required class="form-control form-control-lg p-5"
-                                accept=".pdf,.jpg,.jpeg,.gif,.png,.txt,.xml,.doc,.docx,.ppt,.pptx,.xlsx,.xmlx" style="min-height: 100px; cursor: pointer;" />
-                            <div class="form-text">Accepted: .pdf, .jpg, .jpeg, .gif, .png, .txt, .xml, .doc, .docx, .ppt, .pptx, .xlsx, .xmlx</div>
-                            <div class="form-text">Office files are converted to PDF server-side before printing. XML prints as plain text. The non-standard .xmlx extension is treated as .xlsx.</div>
-                            <div class="invalid-feedback">Please supply a valid file.</div>
-                        </div>
+            <div class="mb-2">
+              <label for="fileInput" class="form-label">File(s) to print</label>
+              <input id="fileInput" name="file" type="file" required multiple class="form-control"
+                accept=".pdf,.jpg,.jpeg,.gif,.png,.txt,.xml,.doc,.docx,.ppt,.pptx,.xlsx,.xmlx"
+                style="min-height: 100px; cursor: pointer;" />
+              <div class="form-text">Accepted: .pdf, .jpg, .jpeg, .gif, .png, .txt, .xml, .doc, .docx, .ppt, .pptx,
+                .xlsx, .xmlx — you can select multiple files at once.</div>
+              <div class="form-text">Office files are converted to PDF server-side before printing. XML prints as plain
+                text. The non-standard .xmlx extension is treated as .xlsx.</div>
+              <div class="invalid-feedback">Please supply a valid file.</div>
+            </div>
 
-                        <div class="row mb-3">
-                            <div class="col-3">
-                                <label for="copies" class="form-label">Copies</label>
-                                <input id="copies" name="copies" type="number" class="form-control" min="1" value="1"
-                                    required />
-                                <div class="invalid-feedback">Enter a number ≥ 1.</div>
-                            </div>
-
-                            <div class="col-9">
-                                <label class="form-label">Printer options (optional)</label>
-                                <div class="input-group mb-2">
-                                    <input id="optionName" class="form-control"
-                                        placeholder="Option name (e.g. sides)" />
-                                    <span class="input-group-text">=</span>
-                                    <input id="optionValue" class="form-control"
-                                        placeholder="Value (e.g. two-sided-long-edge)" />
-                                    <button type="button" id="addOptionBtn" class="btn btn-primary">Add</button>
-                                </div>
-                                <div class="mb-2">
-                                    <a class="text-decoration-none" data-bs-toggle="collapse" href="#optionsHelp"
-                                        role="button" aria-expanded="false">
-                                        Show common options ▾
-                                    </a>
-                                    <div class="collapse" id="optionsHelp">
-                                        <div class="form-text">
-                                            <pre class="mb-2 p-3">
+            <div class="mb-3">
+              <label for="copies" class="form-label">Copies</label>
+              <input id="copies" name="copies" type="number" class="form-control" min="1" value="1" required />
+              <div class="invalid-feedback">Enter a number ≥ 1.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Printer options (optional)</label>
+              <div class="input-group mb-2">
+                <input id="optionName" class="form-control" placeholder="Option name (e.g. sides)" />
+                <span class="input-group-text">=</span>
+                <input id="optionValue" class="form-control" placeholder="Value (e.g. two-sided-long-edge)" />
+                <button type="button" id="addOptionBtn" class="btn btn-primary">Add</button>
+              </div>
+              <div class="mb-2">
+                <a class="text-decoration-none" data-bs-toggle="collapse" href="#optionsHelp" role="button"
+                  aria-expanded="false">
+                  Show common options ▾
+                </a>
+                <div class="collapse" id="optionsHelp">
+                  <div class="form-text">
+                    <pre class="mb-2 p-3">
 -o job-sheets=standard          Print a banner page with the job
 -o media=size                   Specify the media size to use
 -o number-up=N                  Specify that input pages should be printed N-up (1, 2, 4, 6, 9, and 16 are supported)
@@ -87,45 +81,44 @@
 -o sides=one-sided              Specify 1-sided printing
 -o sides=two-sided-long-edge    Specify 2-sided portrait printing
 -o sides=two-sided-short-edge   Specify 2-sided landscape printing
+-o print-color-mode=color       Print in color
+-o print-color-mode=monochrome  Print in black & white / grayscale
 </pre>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="optionsList" class="d-flex flex-wrap gap-2"></div>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row mb-2 p-2">
-                            <div class="col-6">
-                                <button id="submitBtn" type="submit" class="btn btn-success">
-                                    <span id="submitSpinner" class="spinner-grow spinner-grow-sm visually-hidden"
-                                        role="status" aria-hidden="true"></span>
-                                    <span id="submitText">Send to Printer</span>
-                                </button>
-                            </div>
-                            <div class="col-4">
-                                <button id="resetBtn" type="button" class="btn btn-outline-secondary">Reset</button>
-                            </div>
-                            <div class="col-2">
-                                <div id="statusBadge"></div>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div id="statusBox" class="p-1 border rounded" aria-live="polite">
-                        <strong>Status:</strong> <span id="statusMessage">Idle</span>
-                    </div>
+                  </div>
                 </div>
+                <div id="optionsList" class="d-flex flex-wrap gap-2"></div>
+              </div>
             </div>
+            <hr />
+            <div class="row mb-2 p-2">
+              <div class="col-6">
+                <button id="submitBtn" type="submit" class="btn btn-success">
+                  <span id="submitSpinner" class="spinner-grow spinner-grow-sm visually-hidden" role="status"
+                    aria-hidden="true"></span>
+                  <span id="submitText">Send to Printer</span>
+                </button>
+              </div>
+              <div class="col-4">
+                <button id="resetBtn" type="button" class="btn btn-outline-secondary">Reset</button>
+              </div>
+            </div>
+          </form>
+
+          <div id="statusBox" class="p-2 border rounded" aria-live="polite">
+            <strong>Status:</strong> <span id="statusMessage">Idle</span>
+            <div id="fileStatusList" class="mt-2"></div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Bootstrap JS bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom script -->
-    <script src="print-job.js?v=@buildId@"></script>
-    <script src="printers.js?v=@buildId@"></script>
+  <!-- Custom script -->
+  <script src="print-job.js?v=@buildId@"></script>
+  <script src="printers.js?v=@buildId@"></script>
 </body>
 
 </html>

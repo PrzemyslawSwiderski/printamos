@@ -5,7 +5,7 @@ echo "Starting dbus-daemon..."
 mkdir -p /run/dbus
 dbus-daemon --system > /var/log/cups/dbus 2>&1 &
 
-sleep 2
+sleep 1
 
 # Overwrite Docker's generated file with our own
 cat <<EOF > /etc/resolv.conf
@@ -16,19 +16,19 @@ EOF
 echo "Starting unbound..."
 unbound 2>&1 &
 
-sleep 2
+sleep 1
 
 # Start avahi-daemon
 echo "Starting avahi-daemon..."
 avahi-daemon --no-drop-root --no-rlimits --debug > /var/log/cups/avahi 2>&1 &
 
-sleep 5
+sleep 1
 
 # Start avahi2dns
 echo "Starting avahi2dns..."
-avahi2dns -v -p 5354 -t 2.5s > /var/log/avahi2dns 2>&1 &
+avahi2dns -v -4 -p 5354 -t 2.5s > /var/log/avahi2dns 2>&1 &
 
-sleep 2
+sleep 1
 
 # Start cupsd if available
 if command -v cupsd >/dev/null 2>&1; then
@@ -41,7 +41,7 @@ if command -v cupsd >/dev/null 2>&1; then
 fi
 
 # Wait a moment, then start cups-browsed
-sleep 2
+sleep 1
 
 # Start cups-browsed in background
 echo "Starting cups-browsed..."
