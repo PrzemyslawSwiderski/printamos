@@ -1,4 +1,4 @@
-FROM eclipse-temurin:25.0.3_9-jre-alpine-3.22
+FROM eclipse-temurin:25.0.4_7-jre-alpine-3.22
 
 RUN apk add --no-cache \
       avahi \
