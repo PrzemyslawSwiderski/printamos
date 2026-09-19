@@ -2,7 +2,7 @@
 kotlin = "2.4.20"
 ktor = "3.6.0"
 logback = "1.6.3"
-axiom = "1.21.3"
+axiom = "1.21.4"
 
 [libraries]
 ktor-server-cors = { module = "io.ktor:ktor-server-cors", version.ref = "ktor" }
