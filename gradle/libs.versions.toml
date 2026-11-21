@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.4.21"
 ktor = "3.6.1"
-logback = "1.6.7"
+logback = "1.6.8"
 axiom = "1.21.4"
 
 [libraries]
